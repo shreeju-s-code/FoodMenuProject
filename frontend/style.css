@@ -28,7 +28,21 @@ body {
   background: linear-gradient(135deg, #ff4757 0%, #2f3542 100%);
 }
 
+/* #sss {
+  background-color: red;
+} */
+
 .login-container {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 3rem;
+  border-radius: var(--radius);
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+  text-align: center;
+}
+
+.login-container-registration {
   background: rgba(255, 255, 255, 0.95);
   padding: 3rem;
   border-radius: var(--radius);
@@ -235,4 +249,9 @@ body {
   font-size: 1.5rem;
   cursor: pointer;
   color: var(--text-light);
+}
+
+#error-message {
+  color: red;
+  margin-bottom: 1rem;
 }

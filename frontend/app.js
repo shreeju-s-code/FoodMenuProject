@@ -44,6 +44,43 @@ if (document.getElementById("loginForm")) {
   });
 }
 
+// Register Logic
+if (document.getElementById("registerForm")) {
+  document
+    .getElementById("registerForm")
+    .addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const username = e.target.username.value;
+      const password = e.target.password.value;
+      const confirmPassword = e.target.confirmPassword.value;
+      const errorMsg = document.getElementById("error-message");
+
+      if (password !== confirmPassword) {
+        errorMsg.textContent = "Passwords do not match";
+        return;
+      }
+
+      try {
+        const res = await fetch(`${API_BASE}/auth/register`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username, password }),
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+          alert("Registration successful! Please login.");
+          window.location.href = "login.html";
+        } else {
+          errorMsg.textContent = data.message || "Registration failed";
+        }
+      } catch (err) {
+        errorMsg.textContent = "Server error. Please try again.";
+      }
+    });
+}
+
 // Dashboard Logic
 if (window.location.href.includes("index.html")) {
   checkAuth();
@@ -62,8 +99,10 @@ if (window.location.href.includes("index.html")) {
 
   // Logout
   logoutBtn.addEventListener("click", () => {
-    localStorage.clear();
-    window.location.href = "login.html";
+    if (confirm("Are you sure you want to logout?")) {
+      localStorage.clear();
+      window.location.href = "login.html";
+    }
   });
 
   // Modal Handling

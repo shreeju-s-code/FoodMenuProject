@@ -22,6 +22,12 @@ public class AuthController {
     @Autowired
     JwtUtils jwtUtils;
 
+    @Autowired
+    com.foodmenu.backend.repository.UserRepository userRepository;
+
+    @Autowired
+    org.springframework.security.crypto.password.PasswordEncoder passwordEncoder;
+
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
 
@@ -37,6 +43,32 @@ public class AuthController {
         
         return ResponseEntity.ok(response);
     }
+
+    @PostMapping("/register")
+    public ResponseEntity<?> registerUser(@RequestBody LoginRequest signUpRequest) {
+        if (userRepository.existsByUsername(signUpRequest.getUsername())) {
+             return ResponseEntity
+                    .badRequest()
+                    .body(new MessageResponse("Error: Username is already taken!"));
+        }
+
+        // Create new user's account
+        com.foodmenu.backend.model.User user = new com.foodmenu.backend.model.User();
+        user.setUsername(signUpRequest.getUsername());
+        user.setPassword(passwordEncoder.encode(signUpRequest.getPassword()));
+        user.setRole("USER");
+
+        userRepository.save(user);
+
+        return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
+    }
+}
+
+class MessageResponse {
+    private String message;
+    public MessageResponse(String message) { this.message = message; }
+    public String getMessage() { return message; }
+    public void setMessage(String message) { this.message = message; }
 }
 
 class LoginRequest {
