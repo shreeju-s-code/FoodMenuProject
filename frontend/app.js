@@ -54,6 +54,7 @@ if (document.getElementById("registerForm")) {
       const password = e.target.password.value;
       const confirmPassword = e.target.confirmPassword.value;
       const errorMsg = document.getElementById("error-message");
+      errorMsg.textContent = ""; // Clear previous errors
 
       if (password !== confirmPassword) {
         errorMsg.textContent = "Passwords do not match";
