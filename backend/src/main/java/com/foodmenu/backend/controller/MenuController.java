@@ -46,6 +46,19 @@ public class MenuController {
     public MenuItem createMenuItem(@RequestBody MenuItem menuItem) {
         return menuRepository.save(menuItem);
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<MenuItem> updateMenuItem(@PathVariable Long id, @RequestBody MenuItem menuItem) {
+        return menuRepository.findById(id)
+                .map(item -> {
+                    item.setName(menuItem.getName());
+                    item.setDescription(menuItem.getDescription());
+                    item.setPrice(menuItem.getPrice());
+                    item.setCategory(menuItem.getCategory());
+                    item.setImageUrl(menuItem.getImageUrl());
+                    return ResponseEntity.ok(menuRepository.save(item));
+                }).orElse(ResponseEntity.notFound().build());
+    }
     
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteMenuItem(@PathVariable Long id) {

@@ -4,6 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Food Menu Dashboard</title>
+    <script>
+      // Immediate Auth Check to prevent FOUC (Flash of Unauthenticated Content)
+      const token = localStorage.getItem("token");
+      if (!token) {
+        window.location.href = "login.html";
+      }
+    </script>
     <link rel="stylesheet" href="index.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600&display=swap"
@@ -16,6 +23,14 @@
       <div class="nav-links">
         <span id="welcome-msg"></span>
         <button id="logoutBtn" class="btn-secondary">Logout</button>
+
+        <button
+          id="themeToggle"
+          class="btn-secondary"
+          style="margin-right: 0.5rem"
+        >
+          🌙
+        </button>
       </div>
     </nav>
 
@@ -32,6 +47,14 @@
           <button id="addItemBtn" class="btn-primary">Add New Item</button>
         </div>
       </header>
+
+      <div class="category-tabs">
+        <button class="tab-btn active" data-category="All">All</button>
+        <button class="tab-btn" data-category="Starters">Starters</button>
+        <button class="tab-btn" data-category="Main Course">Main Course</button>
+        <button class="tab-btn" data-category="Desserts">Desserts</button>
+        <button class="tab-btn" data-category="Drinks">Drinks</button>
+      </div>
 
       <div id="menu-grid" class="menu-grid">
         <!-- Menu Items will be injected here -->
