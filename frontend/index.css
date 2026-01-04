@@ -264,7 +264,7 @@ body {
 .card-img {
   height: 200px;
   background-color: #eee;
-  background-size: contain;
+  background-size: cover;
   background-repeat: no-repeat;
   background-position: center;
 }

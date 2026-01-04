@@ -181,7 +181,7 @@ if (document.getElementById("loginForm")) {
         const data = await res.json();
         localStorage.setItem("token", data.token);
         localStorage.setItem("username", data.username);
-        window.location.href = "index.html";
+        window.location.href = "dashboard.html";
       } else {
         errorMsg.textContent = "Invalid credentials";
       }
@@ -233,7 +233,7 @@ if (document.getElementById("registerForm")) {
 }
 
 // Dashboard Logic
-if (window.location.href.includes("index.html")) {
+if (window.location.href.includes("dashboard.html")) {
   checkAuth();
 
   const menuGrid = document.getElementById("menu-grid");
